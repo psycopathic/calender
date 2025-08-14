@@ -11,15 +11,15 @@ export default function LandingPage() {
         {/* Left Section */}
         <section className="flex flex-col items-center text-center flex-1 space-y-6">
           {/* App Logo */}
-          <Image src="/assets/logo.svg" width={150} height={150} alt="Logo" />
+          <Image src="/assets/logo.svg" className="hover:animate-pulse" width={150} height={150} alt="Logo" />
 
           {/* Main Heading */}
-          <h1 className="text-3xl md:text-4xl font-extrabold leading-tight underline">
+          <h1 className="text-3xl md:text-4xl font-extrabold leading-tight underline hover:animate-pulse">
             Your time, <span className="text-red-800">perfectly planned</span>
           </h1>
 
           {/* Subheading */}
-          <p className="text-base md:text-lg text-gray-600 max-w-md font-bold">
+          <p className="text-base md:text-lg text-gray-600 max-w-md font-bold hover:animate-pulse">
             Join millions of professionals who easily book meetings with the #1 scheduling tool.
           </p>
 
@@ -29,7 +29,7 @@ export default function LandingPage() {
             width={300}
             height={300}
             alt="Planning Illustration"
-            className="drop-shadow-xl w-full max-w-sm "
+            className="drop-shadow-xl w-full max-w-sm hover:animate-pulse"
           />
         </section>
 
