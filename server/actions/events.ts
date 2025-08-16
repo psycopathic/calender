@@ -3,8 +3,9 @@ import { prisma } from "@/lib/prisma";
 import { eventFormSchema } from "@/schema/events";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
-import { parse } from "path";
+// import { parse } from "path";
 import { z } from "zod";
+import type { Event } from "@/app/generated/prisma";
 
 export async function createEvent(
   check: z.infer<typeof eventFormSchema>
@@ -82,4 +83,45 @@ export async function deleteEvent(id: string): Promise<void> {
   } finally {
     revalidatePath("/events");
   }
+}
+
+type EventRow = Event;
+export async function getEvents(clerkUserId: string):Promise<EventRow[]>{
+   return await prisma.event.findMany({
+    where:{
+      clerkUserId:clerkUserId,
+    },
+    orderBy:{
+      createdAt:'asc'
+    }
+   })
+}
+
+export async function getEvent(
+  userId: string,
+  eventId: string
+):Promise<EventRow | undefined>{
+  const event = await prisma.event.findFirst({
+    where: {
+      clerkUserId: userId,
+      id: eventId,
+    },
+  });
+  return event ?? undefined;
+}
+
+export type PublicEvent = Omit<Event,"isActive"> & {isActive: boolean};
+
+export async function getPublicEvents(clerkUserId: string): Promise<PublicEvent[]> {
+  const events = await prisma.event.findMany({
+    where: {
+      clerkUserId,
+      isActive: true,
+    },
+    orderBy: {
+      name: "asc",
+    },
+  })
+
+  return events
 }
