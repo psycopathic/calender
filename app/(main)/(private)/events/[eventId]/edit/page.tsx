@@ -25,8 +25,6 @@ export default async function EditEventPage({
         <EventForm
           event={{ ...event, description: event.description || undefined }} // If description is null, pass undefined
         />
-
-        
       </CardContent>
     </Card>
   );
